@@ -21,13 +21,11 @@ public class FenetreBoutonsListener extends JFrame implements ActionListener{
 	final int width = 8;
     final int height = 5;
     private JFrame frame;
-
 	private JButton bouton;
 	private JButton bouton2;
 		
 	public FenetreBoutonsListener(){
 		super();
-		
 		build();//On initialise notre fenêtre
 	}
 	
@@ -51,16 +49,10 @@ public class FenetreBoutonsListener extends JFrame implements ActionListener{
 		bouton2 = new JButton("Square !");
 		bouton2.addActionListener(this);
 		panel.add(bouton2);
-		
+
 		return panel;
 	}
 	
-	public static void main(String[] args) {
-		//On crée une nouvelle instance de notre FenetreBoutons
-		FenetreBoutonsListener fenetre = new FenetreBoutonsListener();
-		fenetre.setVisible(true);//On la rend visible
-	}
-
     public void actionPerformed(ActionEvent e) {
         Object source = e.getSource();
         if(source == bouton){
