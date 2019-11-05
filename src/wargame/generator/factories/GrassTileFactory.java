@@ -6,12 +6,11 @@ import wargame.gui.square.SquareTile;
 
 import java.awt.image.BufferedImage;
 
-
-public class RiverTileFactory extends TileFactory {
+public class GrassTileFactory extends TileFactory {
 
     private BufferedImage image;
 
-    public RiverTileFactory(BufferedImage image){
+    public GrassTileFactory(BufferedImage image){
         this.image = image;
     }
 
@@ -26,4 +25,4 @@ public class RiverTileFactory extends TileFactory {
 
         return null;
     }
-}
+}  

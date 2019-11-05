@@ -12,17 +12,22 @@ import javax.swing.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.awt.FlowLayout;
+import wargame.generator.*;
+import wargame.generator.factories.*;
+import java.util.Random;
 
 /**
  * @author Franck Vandewiele
  *
  */
 public class FenetreBoutonsListener extends JFrame implements ActionListener{
-	final int width = 8;
-    final int height = 5;
+	private int width = 8;
+    private int height = 5;
     private JFrame frame;
 	private JButton bouton;
 	private JButton bouton2;
+    private JTextField textField;
+    private JLabel label;
 		
 	public FenetreBoutonsListener(){
 		super();
@@ -31,7 +36,7 @@ public class FenetreBoutonsListener extends JFrame implements ActionListener{
 	
 	private void build(){
 		setTitle("Selection type "); //On donne un titre à l'application
-		setSize(320,240); //On donne une taille à notre fenêtre
+		setSize(250,140); //On donne une taille à notre fenêtre
 		setLocationRelativeTo(null); //On centre la fenêtre sur l'écran
 		setResizable(true); //On permet le redimensionnement
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //On dit à l'application de se fermer lors du clic sur la croix
@@ -44,37 +49,46 @@ public class FenetreBoutonsListener extends JFrame implements ActionListener{
 		
 		bouton = new JButton("Hex !");
 		bouton.addActionListener(this);
-		panel.add(bouton);
 				
 		bouton2 = new JButton("Square !");
 		bouton2.addActionListener(this);
-		panel.add(bouton2);
 
+        label = new JLabel("Nom du joueur:");
+		textField = new JTextField();
+		textField.setColumns(10); //On lui donne un nombre de colonnes à afficher
+        textField.addActionListener(this);
+        panel.add(label);
+        panel.add(textField);
+        panel.add(bouton);
+        panel.add(bouton2);
 		return panel;
 	}
 	
     public void actionPerformed(ActionEvent e) {
         Object source = e.getSource();
+        TileFactory gFact = TileGenerator.getFactory("GRASS");
+        TileFactory wFact = TileGenerator.getFactory("RIVER");
+        Tile tile;
+        Random r = new Random();
         if(source == bouton){
             TileLayout hexLayout = new HexLayout(height, width);
             JPanel hexPanel = new JPanel(hexLayout);
             hexPanel.setPreferredSize(hexLayout.getPreferredDimension(600));
-            BufferedImage image = null;
-            try {
-                image = ImageIO.read(Thread.currentThread().getContextClassLoader().getResource("assets/grass.png"));
-            } catch (IOException e2) {
-                System.out.println("ERROR: file not found");
-            } 
-
-            if (image == null) {
-                System.exit(-1);
-            }
             for (int row = 0 ; row < height ; row++) {
                 for (int column = 0 ; column < width ; column++) {
-                    Tile hexTile = new HexTile(row + " ; " + column, image);
-                    hexPanel.add(hexTile);
+                switch(r.nextInt(2)){
+                    case(0):
+                        tile = gFact.getTile("HEX",column, row);
+                        hexPanel.add(tile);
+                        break;
+
+                    case(1):
+                        tile = wFact.getTile("HEX",column, row);
+                        hexPanel.add(tile);
+                        break;
                 }
             }
+         }
             JPanel contentPane = new JPanel();
             contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.PAGE_AXIS));
             contentPane.add(hexPanel);
@@ -89,22 +103,20 @@ public class FenetreBoutonsListener extends JFrame implements ActionListener{
             TileLayout squareLayout = new SquareLayout(height, width);
             JPanel squarePanel = new JPanel(squareLayout);
             squarePanel.setPreferredSize(squareLayout.getPreferredDimension(600));
-            BufferedImage image = null;
-            try {
-                image = ImageIO.read(Thread.currentThread().getContextClassLoader().getResource("assets/grass.png"));
-            } catch (IOException e2) {
-                System.out.println("ERROR: file not found");
-            }
 
-            if (image == null) {
-                // si on n'a pas réussi à charger l'image, on quitte le programme
-                System.exit(-1);
-            }
             for (int row = 0 ; row < height ; row++) {
                 for (int column = 0 ; column < width ; column++) {
-                    // construction et ajout d'une SquareTile au JPanel agencé en grille carrée
-                    Tile squareTile = new SquareTile(row + " ; " + column, image);
-                    squarePanel.add(squareTile);
+                    switch(r.nextInt(2)){
+                        case(0):
+                            tile = gFact.getTile("SQUARE",column, row);
+                            squarePanel.add(tile);
+                            break;
+
+                        case(1):
+                            tile = wFact.getTile("SQUARE",column, row);
+                            squarePanel.add(tile);
+                            break;
+                        }
                 }
             }
             JPanel contentPane = new JPanel();

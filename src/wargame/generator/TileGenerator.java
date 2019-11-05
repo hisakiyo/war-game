@@ -1,4 +1,76 @@
 package wargame.generator;
 
+import wargame.generator.factories.*;
+
+import javax.imageio.ImageIO;
+import javax.swing.*;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+
+
 public class TileGenerator {
+    
+    public static TileFactory getFactory(String terrain){
+        if(terrain.equals("RIVER")){
+            BufferedImage image = null;
+
+            try {
+                image = ImageIO.read(Thread.currentThread().getContextClassLoader().getResource("assets/river.png"));
+            } catch (IOException e) {
+                System.out.println("ERROR: file not found");
+    
+            } catch (NullPointerException e) {
+                System.err.println("ERROR: an unexpected error occurred");
+            }
+    
+            if (image == null) {
+                // si on n'a pas réussi à charger l'image, on quitte le programme
+                System.exit(-1);
+            }
+
+            else return new RiverTileFactory(image);
+        }
+
+        if(terrain.equals("GRASS")){
+            BufferedImage image = null;
+
+            try {
+                image = ImageIO.read(Thread.currentThread().getContextClassLoader().getResource("assets/grass.png"));
+            } catch (IOException e) {
+                System.out.println("ERROR: file not found");
+    
+            } catch (NullPointerException e) {
+                System.err.println("ERROR: an unexpected error occurred");
+            }
+    
+            if (image == null) {
+                // si on n'a pas réussi à charger l'image, on quitte le programme
+                System.exit(-1);
+            }
+
+            else return new GrassTileFactory(image);
+        }
+
+        /*if(terrain.equals("MOUNTAIN")){
+            BufferedImage image = null;
+
+            try {
+                image = ImageIO.read(Thread.currentThread().getContextClassLoader().getResource("assets/mountain.png"));
+            } catch (IOException e) {
+                System.out.println("ERROR: file not found");
+    
+            } catch (NullPointerException e) {
+                System.err.println("ERROR: an unexpected error occurred");
+            }
+    
+            if (image == null) {
+                // si on n'a pas réussi à charger l'image, on quitte le programme
+                System.exit(-1);
+            }
+
+            else return new MountainTileFactory(image);
+        }*/
+
+        return null;
+    }
 }
