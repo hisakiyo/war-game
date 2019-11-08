@@ -8,6 +8,11 @@ public class Map {
     public Map(int width, int height) {
         this.map = new Tile[height][width];
     }
+    public Map(Map m){
+        this.map = m.getMap();
+    }
+
+    public Map(){}
 
     public void setMapTile(Tile tile, int row, int col) {
         this.map[row][col] = tile;
@@ -19,5 +24,9 @@ public class Map {
 
     public Tile[][] getMap() {
         return map;
+    }
+
+    public void setMap(Tile[][] map) {
+        this.map = map;
     }
 }

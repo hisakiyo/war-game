@@ -1,6 +1,7 @@
 package wargame;
 
 import wargame.gameplay.Map;
+import wargame.generator.LayoutGenerator;
 import wargame.generator.MapGenerator;
 
 import javax.swing.*;
@@ -14,9 +15,9 @@ import java.awt.event.ActionListener;
  *
  */
 public class FenetreBoutonsListener extends JFrame implements ActionListener{
-    private int width = 8;
-    private int height = 5;
-
+    private int width = 10;
+    private int height = 8;
+    private Map map = new Map();
 
     private JFrame frame;
 	private JButton bouton;
@@ -37,6 +38,10 @@ public class FenetreBoutonsListener extends JFrame implements ActionListener{
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //On dit à l'application de se fermer lors du clic sur la croix
 		setContentPane(buildContentPane());
 	}
+
+	public Map getMap(){
+	    return this.map;
+    }
 	
 	private JPanel buildContentPane(){
 		JPanel panel = new JPanel();
@@ -65,11 +70,12 @@ public class FenetreBoutonsListener extends JFrame implements ActionListener{
 
         if(source == bouton) {
             Map map = MapGenerator.getMap("HEX", height, width);
-            tilePanel = MapGenerator.getPanelLayout(map, "HEX", height, width);
+            tilePanel = LayoutGenerator.getPanelLayout(map, "HEX", height, width);
         }
         else if(source == bouton2) {
             Map map = MapGenerator.getMap("SQUARE", height, width);
-            tilePanel = MapGenerator.getPanelLayout(map, "SQUARE", height, width);
+            this.map=new Map(map);
+            tilePanel = LayoutGenerator.getPanelLayout(map, "SQUARE", height, width);
         }
 
         JPanel contentPane = new JPanel();
