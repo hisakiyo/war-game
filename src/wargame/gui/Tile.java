@@ -1,5 +1,8 @@
 package wargame.gui;
 
+import wargame.Main;
+import wargame.gameplay.Army;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
@@ -17,10 +20,12 @@ import java.awt.image.BufferedImage;
 public abstract class Tile extends JComponent implements MouseListener {
 
     private String text = "";
+    private Army army = null;
     protected BufferedImage tile;
     private BufferedImage scaledTile;
     private boolean highlightable = true;
     private Color highlightColor = new Color(255, 0, 0, 64);
+    //add type tile
 
     protected Polygon border = new Polygon();
     protected Rectangle boundingBox = new Rectangle();
@@ -89,7 +94,9 @@ public abstract class Tile extends JComponent implements MouseListener {
     }
 
     @Override
-    public void mouseClicked(MouseEvent mouseEvent) {}
+    public void mouseClicked(MouseEvent mouseEvent) {
+        this.placeArmy(Main.currentArmy);
+    }
 
     @Override
     public void mousePressed(MouseEvent mouseEvent) {}
@@ -254,5 +261,21 @@ public abstract class Tile extends JComponent implements MouseListener {
         this.tile = image;
         this.previousHeight = -1;
         this.previousWidth = -1;
+    }
+
+    public void setArmy(Army army) {
+        this.army = army;
+    }
+    public Army getArmy() {
+        return this.army;
+    }
+
+    public void placeArmy(Army army){
+        //Check si montage => Ajustement taille armée
+        //Check si rivière => Ntm va te faire foutre
+        this.setArmy(army);
+        this.setTextBackgroundColor(army.getOwner().getPlayerColor());
+        this.text = ""+army.getSize();
+        //Passer au prochain joueur ici ? Jsp la vie de moi
     }
 }
