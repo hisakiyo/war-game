@@ -19,7 +19,7 @@ public class SquareTileNeighbors extends TileNeighbors {
                 neighbors.add(map.getMapTile(row + 1, col));
             }
         }
-        if (col-1<0){
+        if (col - 1 > 0) {
             if (map.getMapTile(row, col - 1).isTaken()) {
                 neighbors.add(map.getMapTile(row, col - 1));
             }
