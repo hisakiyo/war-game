@@ -16,11 +16,11 @@ public class GrassTileFactory extends TileFactory {
 
     public Tile getTile(String tileType, int col, int row){
         if(tileType.equals("HEX")){
-            return new HexTile(row+" ; "+col, this.image);
+            return new HexTile(row + " ; " + col, this.image, Tile.GRASS, row, col);
         }
 
         else if(tileType.equals("SQUARE")){
-            return new SquareTile(row+" ; "+col, this.image);
+            return new SquareTile(row + " ; " + col, this.image, Tile.GRASS, row, col);
         }
 
         return null;

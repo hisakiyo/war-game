@@ -17,11 +17,13 @@ public abstract class TileNeighbors {
         Iterator<Tile> iterator = this.getNeighbors().iterator();
         while(iterator.hasNext()){
             currentTile = iterator.next();
+            if (centerTile.getArmy().getSize() > currentTile.getArmy().getSize() && centerTile.getArmy().getOwner() == currentTile.getArmy().getOwner()) {
+                currentTile.getArmy().setSize(currentTile.getArmy().getSize() + 1);
+                currentTile.setTextContent("" + currentTile.getArmy().getSize());
+            }
             if(centerTile.getArmy().getSize() > currentTile.getArmy().getSize() && centerTile.getArmy().getOwner() != currentTile.getArmy().getOwner()){
                 currentTile.getArmy().setOwner(centerTile.getArmy().getOwner());
-            }
-            if(centerTile.getArmy().getSize() > currentTile.getArmy().getSize() && centerTile.getArmy().getOwner() == currentTile.getArmy().getOwner()){
-                currentTile.getArmy().setSize(currentTile.getArmy().getSize()+1);
+                currentTile.setTextBackgroundColor(currentTile.getArmy().getOwner().getPlayerColor());
             }
         }
     }

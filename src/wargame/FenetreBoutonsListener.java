@@ -1,6 +1,5 @@
 package wargame;
 
-import wargame.gameplay.Map;
 import wargame.generator.LayoutGenerator;
 import wargame.generator.MapGenerator;
 
@@ -15,9 +14,6 @@ import java.awt.event.ActionListener;
  *
  */
 public class FenetreBoutonsListener extends JFrame implements ActionListener{
-    private int width = 10;
-    private int height = 8;
-    private Map map = new Map();
 
     private JFrame frame;
 	private JButton bouton;
@@ -39,10 +35,6 @@ public class FenetreBoutonsListener extends JFrame implements ActionListener{
 		setContentPane(buildContentPane());
 	}
 
-	public Map getMap(){
-	    return this.map;
-    }
-	
 	private JPanel buildContentPane(){
 		JPanel panel = new JPanel();
 		panel.setLayout(new FlowLayout());
@@ -69,13 +61,12 @@ public class FenetreBoutonsListener extends JFrame implements ActionListener{
         JPanel tilePanel = new JPanel();
 
         if(source == bouton) {
-            Map map = MapGenerator.getMap("HEX", height, width);
-            tilePanel = LayoutGenerator.getPanelLayout(map, "HEX", height, width);
+            Main.gameMap = MapGenerator.getMap("HEX", Main.height, Main.width);
+            tilePanel = LayoutGenerator.getPanelLayout(Main.gameMap, "HEX", Main.height, Main.width);
         }
         else if(source == bouton2) {
-            Map map = MapGenerator.getMap("SQUARE", height, width);
-            this.map=new Map(map);
-            tilePanel = LayoutGenerator.getPanelLayout(map, "SQUARE", height, width);
+            Main.gameMap = MapGenerator.getMap("SQUARE", Main.height, Main.width);
+            tilePanel = LayoutGenerator.getPanelLayout(Main.gameMap, "SQUARE", Main.height, Main.width);
         }
 
         JPanel contentPane = new JPanel();

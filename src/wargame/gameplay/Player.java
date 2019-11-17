@@ -1,7 +1,10 @@
 package wargame.gameplay;
 
+import wargame.Main;
+
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Random;
 
 public class Player {
     private ArrayList<Army> armyList;
@@ -30,16 +33,8 @@ public class Player {
         return armyList;
     }
 
-    public void setArmyList(ArrayList<Army> armyList) {
-        this.armyList = armyList;
-    }
-
     public int getPlayerId() {
         return playerId;
-    }
-
-    public void setPlayerId(int playerId) {
-        this.playerId = playerId;
     }
 
     public int getScore(){
@@ -54,16 +49,29 @@ public class Player {
         this.playerColor = playerColor;
     }
 
+    public Army getRandomArmy() {
+        Random r = new Random();
+        int armyId = r.nextInt(this.getArmyList().size());
+        Army army = this.getArmyList().get(armyId);
+        this.getArmyList().remove(armyId);
+        return army;
+    }
+
+
+
     public void updateScore(Map map) {
-        int newScore = this.getScore();
-        for(int i=0; i<map.getMap().length;i++){
-            for(int j=0;j<map.getMap()[i].length;j++){
-                if (map.getMapTile(i,j).getArmy().getOwner() == this){
-                    newScore+=map.getMapTile(i,j).getArmy().getSize();
+        int newScore = 0;
+        for (int i = 0; i < Main.width; i++) {
+            for (int j = 0; j < Main.height; j++) {
+                if (map.getMapTile(i, j).isTaken()) {
+                    if (map.getMapTile(i, j).getArmy().getOwner().equals(this)) {
+                        newScore += map.getMapTile(i, j).getArmy().getSize();
+                    }
                 }
             }
         }
         this.score = newScore;
+        System.out.println(this.playerId + ":" + newScore);
     }
     public boolean equals(Player p) {
         return this.getPlayerId() == p.getPlayerId();

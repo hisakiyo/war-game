@@ -7,12 +7,8 @@ import java.awt.image.BufferedImage;
 
 public class SquareTile extends Tile {
 
-    public SquareTile(String text, BufferedImage image) {
-        super(text, image);
-    }
-
-    public SquareTile(BufferedImage image) {
-        this("", image);
+    public SquareTile(String text, BufferedImage image, int type, int row, int col) {
+        super(text, image, type, row, col);
     }
 
     @Override

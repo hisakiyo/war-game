@@ -2,6 +2,10 @@ package wargame.gui;
 
 import wargame.Main;
 import wargame.gameplay.Army;
+import wargame.gameplay.Player;
+import wargame.gameplay.SquareTileNeighbors;
+import wargame.gameplay.TileNeighbors;
+import wargame.gui.square.SquareTile;
 
 import javax.swing.*;
 import java.awt.*;
@@ -19,13 +23,20 @@ import java.awt.image.BufferedImage;
  */
 public abstract class Tile extends JComponent implements MouseListener {
 
+    public static final int GRASS = 1;
+    public static final int RIVER = 2;
+    public static final int MOUNTAIN = 3;
+
     private String text = "";
+    private int type;
     private Army army = null;
+    private int row;
+    private int col;
     protected BufferedImage tile;
     private BufferedImage scaledTile;
     private boolean highlightable = true;
     private Color highlightColor = new Color(255, 0, 0, 64);
-    //add type tile
+    private boolean taken = false;
 
     protected Polygon border = new Polygon();
     protected Rectangle boundingBox = new Rectangle();
@@ -34,8 +45,10 @@ public abstract class Tile extends JComponent implements MouseListener {
     private int previousWidth = 0;
     private Color textBackgroundColor = new Color(64, 64, 64);
 
-    public Tile(String text, BufferedImage image) {
+    public Tile(String text, BufferedImage image, int type, int i, int j) {
         this.text = text;
+        this.row = i;
+        this.col = j;
         this.recomputeBorder();
         this.addMouseListener(this);
         this.setTile(image);
@@ -43,6 +56,35 @@ public abstract class Tile extends JComponent implements MouseListener {
         this.setFont(f);
         this.setCursor(new Cursor(Cursor.HAND_CURSOR));
         this.setLayout(new FlowLayout());
+        this.type = type;
+    }
+
+    public int getType() {
+        return type;
+    }
+
+    public boolean isTaken() {
+        return taken;
+    }
+
+    public void setTaken(boolean taken) {
+        this.taken = taken;
+    }
+
+    public int getRow() {
+        return row;
+    }
+
+    public void setRow(int row) {
+        this.row = row;
+    }
+
+    public int getCol() {
+        return col;
+    }
+
+    public void setCol(int col) {
+        this.col = col;
     }
 
     /**
@@ -270,12 +312,37 @@ public abstract class Tile extends JComponent implements MouseListener {
         return this.army;
     }
 
-    public void placeArmy(Army army){
-        //Check si montage => Ajustement taille armée
-        //Check si rivière => Ntm va te faire foutre
-        this.setArmy(army);
-        this.setTextBackgroundColor(army.getOwner().getPlayerColor());
-        this.text = ""+army.getSize();
-        //Passer au prochain joueur ici ? Jsp la vie de moi
+    public void placeArmy(Army army) {
+        if (this.taken == false) {
+            if (this.getType() != RIVER) {
+                if (this.getType() == MOUNTAIN) {
+                    if (army.getSize() > 3) {
+                        army.setSize(3);
+                    }
+                }
+                this.setArmy(army);
+                this.setTextBackgroundColor(army.getOwner().getPlayerColor());
+                this.text = "" + army.getSize();
+                this.setTaken(true);
+                if (this instanceof SquareTile) {
+                    TileNeighbors neighborhood = new SquareTileNeighbors(Main.gameMap, this.getRow(), this.getCol());
+                    neighborhood.updateNeighbors(this);
+                }
+                Main.currentPlayer.updateScore(Main.gameMap);
+                if (Main.iterPlayer.hasNext()) {
+                    Main.currentPlayer = (Player) Main.iterPlayer.next();
+                    Main.currentArmy = Main.currentPlayer.getRandomArmy();
+                } else {
+                    Main.iterPlayer = Main.playerQueue.iterator();
+                    Main.currentPlayer = (Player) Main.iterPlayer.next();
+                    Main.currentArmy = Main.currentPlayer.getRandomArmy();
+                }
+
+            }
+        }
+        this.repaint();
     }
+
 }
+
+

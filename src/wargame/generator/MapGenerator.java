@@ -13,16 +13,21 @@ public class MapGenerator {
         Random r = new Random();
         TileFactory gFact = TileGenerator.getFactory("GRASS");
         TileFactory rFact = TileGenerator.getFactory("RIVER");
+        TileFactory mFact = TileGenerator.getFactory("MOUNTAIN");
 
         for (int row = 0 ; row < height; row++) {
             for (int column = 0; column < width; column++) {
-                switch (r.nextInt(2)) {
+                switch (r.nextInt(3)) {
                     case (0):
                         map.setMapTile(gFact.getTile(mapType, column, row), row, column);
                         break;
 
                     case (1):
                         map.setMapTile(rFact.getTile(mapType, column, row), row, column);
+                        break;
+
+                    case (2):
+                        map.setMapTile(mFact.getTile(mapType, column, row), row, column);
                         break;
                 }
             }

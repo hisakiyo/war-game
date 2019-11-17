@@ -17,11 +17,11 @@ public class RiverTileFactory extends TileFactory {
 
     public Tile getTile(String tileType, int col, int row){
         if(tileType.equals("HEX")){
-            return new HexTile(row+" ; "+col, this.image);
+            return new HexTile("0", this.image, Tile.RIVER, row, col);
         }
 
         else if(tileType.equals("SQUARE")){
-            return new SquareTile(row+" ; "+col, this.image);
+            return new SquareTile("0", this.image, Tile.RIVER, row, col);
         }
 
         return null;
