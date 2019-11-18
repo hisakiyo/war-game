@@ -20,7 +20,7 @@ public class GrassTileFactory extends TileFactory {
         }
 
         else if(tileType.equals("SQUARE")){
-            return new SquareTile(row + " ; " + col, this.image, Tile.GRASS, row, col);
+            return new SquareTile("0", this.image, Tile.GRASS, row, col);
         }
 
         return null;

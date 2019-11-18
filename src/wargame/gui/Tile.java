@@ -1,10 +1,8 @@
 package wargame.gui;
 
 import wargame.Main;
-import wargame.gameplay.Army;
-import wargame.gameplay.Player;
-import wargame.gameplay.SquareTileNeighbors;
-import wargame.gameplay.TileNeighbors;
+import wargame.gameplay.*;
+import wargame.gui.hex.HexTile;
 import wargame.gui.square.SquareTile;
 
 import javax.swing.*;
@@ -23,11 +21,11 @@ import java.awt.image.BufferedImage;
  */
 public abstract class Tile extends JComponent implements MouseListener {
 
+    public static final int RIVER = 0;
     public static final int GRASS = 1;
-    public static final int RIVER = 2;
-    public static final int MOUNTAIN = 3;
+    public static final int MOUNTAIN = 2;
 
-    private String text = "";
+    private String text;
     private int type;
     private Army army = null;
     private int row;
@@ -313,7 +311,7 @@ public abstract class Tile extends JComponent implements MouseListener {
     }
 
     public void placeArmy(Army army) {
-        if (this.taken == false) {
+        if (!this.taken) {
             if (this.getType() != RIVER) {
                 if (this.getType() == MOUNTAIN) {
                     if (army.getSize() > 3) {
@@ -328,7 +326,10 @@ public abstract class Tile extends JComponent implements MouseListener {
                     TileNeighbors neighborhood = new SquareTileNeighbors(Main.gameMap, this.getRow(), this.getCol());
                     neighborhood.updateNeighbors(this);
                 }
-                Main.currentPlayer.updateScore(Main.gameMap);
+                if (this instanceof HexTile) {
+                    TileNeighbors neighborhood = new HexTileNeighbors(Main.gameMap, this.getRow(), this.getCol());
+                    neighborhood.updateNeighbors(this);
+                }
                 if (Main.iterPlayer.hasNext()) {
                     Main.currentPlayer = (Player) Main.iterPlayer.next();
                     Main.currentArmy = Main.currentPlayer.getRandomArmy();
@@ -338,11 +339,25 @@ public abstract class Tile extends JComponent implements MouseListener {
                     Main.currentArmy = Main.currentPlayer.getRandomArmy();
                 }
 
+                for (Player player : Main.playerQueue) {
+                    player.updateScore(Main.gameMap);
+                    System.out.println("Score Joueur " + player.getPlayerId() + " : " + player.getScore());
+                }
+
             }
         }
         this.repaint();
     }
 
+    @Override
+    public String toString() {
+        return "Tile{" +
+                "type=" + type +
+                ", row=" + row +
+                ", col=" + col +
+                ", taken=" + taken +
+                '}';
+    }
 }
 
 

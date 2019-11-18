@@ -1,15 +1,14 @@
 package wargame.gameplay;
 
 import wargame.Main;
-import wargame.gui.Tile;
 
 import java.util.ArrayList;
 
 public class SquareTileNeighbors extends TileNeighbors {
 
     public SquareTileNeighbors(Map map, int row, int col){
-        neighbors = new ArrayList<Tile>();
-        if (row-1>0){
+        neighbors = new ArrayList<>();
+        if (row - 1 >= 0) {
             if (map.getMapTile(row - 1, col).isTaken()) {
                 neighbors.add(map.getMapTile(row - 1, col));
             }
@@ -19,7 +18,7 @@ public class SquareTileNeighbors extends TileNeighbors {
                 neighbors.add(map.getMapTile(row + 1, col));
             }
         }
-        if (col - 1 > 0) {
+        if (col - 1 >= 0) {
             if (map.getMapTile(row, col - 1).isTaken()) {
                 neighbors.add(map.getMapTile(row, col - 1));
             }
@@ -29,7 +28,6 @@ public class SquareTileNeighbors extends TileNeighbors {
                 neighbors.add(map.getMapTile(row, col + 1));
             }
         }
-        System.out.println(neighbors);
     }
 
 

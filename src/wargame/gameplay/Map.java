@@ -17,8 +17,4 @@ public class Map {
         return this.map[row][col];
     }
 
-    public Tile[][] getMap() {
-        return map;
-    }
-
 }

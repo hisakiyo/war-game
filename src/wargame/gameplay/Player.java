@@ -14,7 +14,7 @@ public class Player {
 
     public Player(int id, Color color){
         this.playerId = id;
-        armyList = new ArrayList<Army>();
+        armyList = new ArrayList<>();
         armyList.add(new Army(1,this));
         armyList.add(new Army(1,this));
         armyList.add(new Army(2,this));
@@ -65,13 +65,12 @@ public class Player {
             for (int j = 0; j < Main.height; j++) {
                 if (map.getMapTile(i, j).isTaken()) {
                     if (map.getMapTile(i, j).getArmy().getOwner().equals(this)) {
-                        newScore += map.getMapTile(i, j).getArmy().getSize();
+                        newScore += map.getMapTile(i, j).getArmy().getSize() * map.getMapTile(i, j).getType();
                     }
                 }
             }
         }
         this.score = newScore;
-        System.out.println(this.playerId + ":" + newScore);
     }
     public boolean equals(Player p) {
         return this.getPlayerId() == p.getPlayerId();
