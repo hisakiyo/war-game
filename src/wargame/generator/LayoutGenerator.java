@@ -4,8 +4,11 @@ import wargame.gameplay.Map;
 import wargame.gui.TileLayout;
 import wargame.gui.hex.HexLayout;
 import wargame.gui.square.SquareLayout;
+import wargame.Main;
+import wargame.gameplay.*;
 
 import javax.swing.*;
+import java.awt.*;
 
 public class LayoutGenerator {
     public static JPanel getPanelLayout(Map map, String mapType, int height, int width){
@@ -20,6 +23,7 @@ public class LayoutGenerator {
             panel = new JPanel(squareLayout);
             panel.setPreferredSize(squareLayout.getPreferredDimension(600));
 
+
         }
 
         else return null;
@@ -29,6 +33,7 @@ public class LayoutGenerator {
                 panel.add(map.getMapTile(i,j));
             }
         }
+
         return panel;
     }
 

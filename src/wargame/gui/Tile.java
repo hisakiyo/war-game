@@ -4,7 +4,7 @@ import wargame.Main;
 import wargame.gameplay.*;
 import wargame.gui.hex.HexTile;
 import wargame.gui.square.SquareTile;
-
+import wargame.FenetreBoutonsListener;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
@@ -338,10 +338,10 @@ public abstract class Tile extends JComponent implements MouseListener {
                     Main.currentPlayer = (Player) Main.iterPlayer.next();
                     Main.currentArmy = Main.currentPlayer.getRandomArmy();
                 }
-
-                for (Player player : Main.playerQueue) {
+                for(int i = 0; i<2 ; i++){
+                    Player player = Main.playerQueue.get(i);
                     player.updateScore(Main.gameMap);
-                    System.out.println("Score Joueur " + player.getPlayerId() + " : " + player.getScore());
+                    FenetreBoutonsListener.update_score(player.getScore(), i , player.getArmyList().isEmpty());
                 }
 
             }
