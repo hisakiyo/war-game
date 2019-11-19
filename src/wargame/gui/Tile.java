@@ -156,6 +156,7 @@ public abstract class Tile extends JComponent implements MouseListener {
         FontMetrics fontMetrics = getFontMetrics(this.getFont());
 
         Rectangle iconR = new Rectangle();
+
         Rectangle textR = new Rectangle();
 
         SwingUtilities.layoutCompoundLabel(
