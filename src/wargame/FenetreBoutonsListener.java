@@ -30,7 +30,7 @@ public class FenetreBoutonsListener extends JFrame implements ActionListener{
 	
 	private void build(){
 		setTitle("Choix grille"); //On donne un titre à l'application
-		setSize(250,140); //On donne une taille à notre fenêtre
+		setSize(250,210); //On donne une taille à notre fenêtre
 		setLocationRelativeTo(null); //On centre la fenêtre sur l'écran
 		setResizable(false); //On permet le redimensionnement
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //On dit à l'application de se fermer lors du clic sur la croix

@@ -145,7 +145,6 @@ public class Player {
             }
         }
         this.score = newScore;
-        System.out.println(this.playerId + ":" + newScore);
     }
 
     /*****************/
