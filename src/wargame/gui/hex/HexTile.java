@@ -15,8 +15,8 @@ public class HexTile extends Tile {
     private static final long serialVersionUID = 42L;
 
 
-    public HexTile(String text, BufferedImage image) {
-        super(text, image);
+    public HexTile(String text, BufferedImage image, int type, int row, int col) {
+        super(text, image, type, row, col);
     }
 
     @Override

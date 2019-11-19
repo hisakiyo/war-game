@@ -1,5 +1,10 @@
 package wargame.gui;
 
+import wargame.Main;
+import wargame.gameplay.*;
+import wargame.gui.hex.HexTile;
+import wargame.gui.square.SquareTile;
+import wargame.FenetreBoutonsListener;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
@@ -16,11 +21,20 @@ import java.awt.image.BufferedImage;
  */
 public abstract class Tile extends JComponent implements MouseListener {
 
-    private String text = "";
+    public static final int RIVER = 0;
+    public static final int GRASS = 1;
+    public static final int MOUNTAIN = 2;
+
+    private String text;
+    private int type;
+    private Army army = null;
+    private int row;
+    private int col;
     protected BufferedImage tile;
     private BufferedImage scaledTile;
     private boolean highlightable = true;
     private Color highlightColor = new Color(255, 0, 0, 64);
+    private boolean taken = false;
 
     protected Polygon border = new Polygon();
     protected Rectangle boundingBox = new Rectangle();
@@ -29,8 +43,10 @@ public abstract class Tile extends JComponent implements MouseListener {
     private int previousWidth = 0;
     private Color textBackgroundColor = new Color(64, 64, 64);
 
-    public Tile(String text, BufferedImage image) {
+    public Tile(String text, BufferedImage image, int type, int i, int j) {
         this.text = text;
+        this.row = i;
+        this.col = j;
         this.recomputeBorder();
         this.addMouseListener(this);
         this.setTile(image);
@@ -38,6 +54,35 @@ public abstract class Tile extends JComponent implements MouseListener {
         this.setFont(f);
         this.setCursor(new Cursor(Cursor.HAND_CURSOR));
         this.setLayout(new FlowLayout());
+        this.type = type;
+    }
+
+    public int getType() {
+        return type;
+    }
+
+    public boolean isTaken() {
+        return taken;
+    }
+
+    public void setTaken(boolean taken) {
+        this.taken = taken;
+    }
+
+    public int getRow() {
+        return row;
+    }
+
+    public void setRow(int row) {
+        this.row = row;
+    }
+
+    public int getCol() {
+        return col;
+    }
+
+    public void setCol(int col) {
+        this.col = col;
     }
 
     /**
@@ -89,7 +134,9 @@ public abstract class Tile extends JComponent implements MouseListener {
     }
 
     @Override
-    public void mouseClicked(MouseEvent mouseEvent) {}
+    public void mouseClicked(MouseEvent mouseEvent) {
+        this.placeArmy(Main.currentArmy);
+    }
 
     @Override
     public void mousePressed(MouseEvent mouseEvent) {}
@@ -255,4 +302,62 @@ public abstract class Tile extends JComponent implements MouseListener {
         this.previousHeight = -1;
         this.previousWidth = -1;
     }
+
+    public void setArmy(Army army) {
+        this.army = army;
+    }
+    public Army getArmy() {
+        return this.army;
+    }
+
+    public void placeArmy(Army army) {
+        if (!this.taken) {
+            if (this.getType() != RIVER) {
+                if (this.getType() == MOUNTAIN) {
+                    if (army.getSize() > 3) {
+                        army.setSize(3);
+                    }
+                }
+                this.setArmy(army);
+                this.setTextBackgroundColor(army.getOwner().getPlayerColor());
+                this.text = "" + army.getSize();
+                this.setTaken(true);
+                if (this instanceof SquareTile) {
+                    TileNeighbors neighborhood = new SquareTileNeighbors(Main.gameMap, this.getRow(), this.getCol());
+                    neighborhood.updateNeighbors(this);
+                }
+                if (this instanceof HexTile) {
+                    TileNeighbors neighborhood = new HexTileNeighbors(Main.gameMap, this.getRow(), this.getCol());
+                    neighborhood.updateNeighbors(this);
+                }
+                if (Main.iterPlayer.hasNext()) {
+                    Main.currentPlayer = (Player) Main.iterPlayer.next();
+                    Main.currentArmy = Main.currentPlayer.getRandomArmy();
+                } else {
+                    Main.iterPlayer = Main.playerQueue.iterator();
+                    Main.currentPlayer = (Player) Main.iterPlayer.next();
+                    Main.currentArmy = Main.currentPlayer.getRandomArmy();
+                }
+                for(int i = 0; i<2 ; i++){
+                    Player player = Main.playerQueue.get(i);
+                    player.updateScore(Main.gameMap);
+                    FenetreBoutonsListener.update_score(player.getScore(), i , player.getArmyList().isEmpty());
+                }
+
+            }
+        }
+        this.repaint();
+    }
+
+    @Override
+    public String toString() {
+        return "Tile{" +
+                "type=" + type +
+                ", row=" + row +
+                ", col=" + col +
+                ", taken=" + taken +
+                '}';
+    }
 }
+
+

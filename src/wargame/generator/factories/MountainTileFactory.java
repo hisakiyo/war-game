@@ -1,5 +1,5 @@
 /**
- * MountainTileFactory est la classe représentant une zone de rivière sur le terrain de jeu.
+ * MountainTileFactory est la classe représentant une zone de montagne sur le terrain de jeu.
  * On lui associe une représentation graphique, ainsi qu'une forme en fonction du type de
  * tuile du terrain.
  *
@@ -15,8 +15,7 @@ import wargame.gui.square.SquareTile;
 
 import java.awt.image.BufferedImage;
 
-
-public class RiverTileFactory extends TileFactory {
+public class MountainTileFactory extends TileFactory {
 
     //Attribut
     private BufferedImage image;
@@ -27,9 +26,9 @@ public class RiverTileFactory extends TileFactory {
     /**
     * Constructeur
     * 
-    * @param image image représentant une rivière
+    * @param image image représentant une montagne
     */
-    public RiverTileFactory(BufferedImage image){
+    public MountainTileFactory(BufferedImage image) {
         this.image = image;
     }
 
@@ -37,13 +36,13 @@ public class RiverTileFactory extends TileFactory {
     
     //Méthode get 
 
-    public Tile getTile(String tileType, int col, int row){
-        if(tileType.equals("HEX")){
-            return new HexTile("0", this.image, Tile.RIVER, row, col);
-        }
-
-        else if(tileType.equals("SQUARE")){
-            return new SquareTile("0", this.image, Tile.RIVER, row, col);
+    public Tile getTile(String tileType, int col, int row) {
+        if (tileType.equals("HEX")) {
+            return new HexTile("0", this.image, Tile.MOUNTAIN, row, col);
+        } 
+        
+        else if (tileType.equals("SQUARE")) {
+            return new SquareTile("0", this.image, Tile.MOUNTAIN, row, col);
         }
 
         return null;
