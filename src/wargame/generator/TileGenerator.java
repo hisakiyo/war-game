@@ -1,9 +1,11 @@
 package wargame.generator;
 
-import wargame.generator.factories.*;
+import wargame.generator.factories.GrassTileFactory;
+import wargame.generator.factories.MountainTileFactory;
+import wargame.generator.factories.RiverTileFactory;
+import wargame.generator.factories.TileFactory;
 
 import javax.imageio.ImageIO;
-import javax.swing.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
@@ -51,7 +53,7 @@ public class TileGenerator {
             else return new GrassTileFactory(image);
         }
 
-        /*if(terrain.equals("MOUNTAIN")){
+        if (terrain.equals("MOUNTAIN")) {
             BufferedImage image = null;
 
             try {
@@ -69,7 +71,7 @@ public class TileGenerator {
             }
 
             else return new MountainTileFactory(image);
-        }*/
+        }
 
         return null;
     }
