@@ -13,6 +13,13 @@ import wargame.Main;
 import java.util.ArrayList;
 
 public class HexTileNeighbors extends TileNeighbors {
+    /**
+     * On cree un voisinnage d'un case donnee en verifiant si les coordonnes des cases adjacantes a cette case sont possibles (donc ne sorte pas de la carte) et si les dites cases sont prises ou non
+     *
+     * @param map La carte associee a la partie en cours
+     * @param row La ligne de la case dont on va creer le voisinnage
+     * @param col La colonne de la ligne dont on cree le voisinnage
+     */
     public HexTileNeighbors(Map map, int row, int col) {
         neighbors = new ArrayList<>();
         if (row - 1 >= 0) {

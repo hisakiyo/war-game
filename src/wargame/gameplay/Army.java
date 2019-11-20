@@ -1,9 +1,9 @@
 /**
- * Army est la classe représentant les armées jouées dans le jeu.
- * Chaque armée a une taille ainsi qu'un propriétaire.
+ * Army est la classe representant les armees jouees dans le jeu.
+ * Chaque armee a une taille ainsi qu'un proprietaire.
  * 
  *
- * @author Tom Maillard
+ * @author DELFORCE Pierre
  * @version 1.0
  */
 
@@ -20,9 +20,9 @@ public class Army {
     //Constructeur
     /**
     * Constructeur
-    * 
-    * @param size taille de l'armée
-    * @param owner propriétaire de l'armée
+    *
+     * @param size taille de l'armee
+     * @param owner proprietaire de l'armee
     */
     public Army(int size, Player owner) {
         this.size = size;
@@ -31,7 +31,7 @@ public class Army {
 
     /********************/
 
-    // Méthodes get 
+    // Methodes get
 
     public int getSize() {
         return size;
@@ -43,7 +43,7 @@ public class Army {
 
     /********************/
 
-    // Méthodes set
+    // Methodes set
 
     public void setSize(int size) {
         this.size = size;

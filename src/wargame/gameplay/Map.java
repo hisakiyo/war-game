@@ -1,9 +1,8 @@
 /**
- * Map est la classe représentant le terrain sur lequel la partie se déroule.
+ * Map est la classe representant le terrain sur lequel la partie se deroule.
  * Le terrain est sur deux dimensions, avec une hauteur et une largeur.
- * On lui associe aussi une tuile.
-
- * @author Tom Maillard
+ * La Map represente grace a un tableau a deux dimensions de Tiles
+ * @author DELFORCE Pierre
  * @version 1.0
  */
 
@@ -15,7 +14,7 @@ public class Map {
 
     //Attribut
 
-    //Tableau à deux dimensions
+    //Tableau a deux dimensions
     private Tile[][] map;
 
     /********************/
@@ -33,7 +32,7 @@ public class Map {
 
     /********************/
 
-    //Méthode set
+    //Methode set
 
     public void setMapTile(Tile tile, int row, int col) {
         this.map[row][col] = tile;
@@ -41,7 +40,7 @@ public class Map {
 
     /********************/
 
-    //Méthode get
+    //Methode get
 
     public Tile getMapTile(int row, int col){
         return this.map[row][col];

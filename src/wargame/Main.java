@@ -1,9 +1,9 @@
 /**
- * Main est le programme principal. Les joueurs ainsi que tout les éléments permettant le déroulement
- * du jeu sont déclarés ici ( fenêtre, itérateur, armées...)
+ * Main est le programme principal. Les joueurs ainsi que tout les elements permettant le deroulement
+ * du jeu sont declares ici ( fenêtre, iterateur, armees...)
  * 
  *
- * @author Tom Maillard
+ * @author MAILLARD Tom & MARETTE Gauthier
  * @version 1.0
  */
 
@@ -31,6 +31,8 @@ public class Main{
     public static void main (String[] args){
         Main.playerQueue.add(new Player(1, Color.RED));
         Main.playerQueue.add(new Player(2, Color.BLUE));
+        Main.playerQueue.add(new Player(3, Color.GREEN));
+        Main.playerQueue.add(new Player(4, Color.MAGENTA));
         iterPlayer = playerQueue.iterator();
         Main.currentPlayer = (Player) iterPlayer.next();
         currentArmy = currentPlayer.getRandomArmy();

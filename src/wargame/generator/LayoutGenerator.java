@@ -4,12 +4,14 @@ import wargame.gameplay.Map;
 import wargame.gui.TileLayout;
 import wargame.gui.hex.HexLayout;
 import wargame.gui.square.SquareLayout;
-import wargame.Main;
-import wargame.gameplay.*;
 
 import javax.swing.*;
-import java.awt.*;
 
+/**
+ * @author MAILLARD Tom
+ * @version 1.0
+ * Cette classe permet de generer un HexLayout ou un SquareLayout representant une map de Tile et du type de Tile utilise pour la construction
+ */
 public class LayoutGenerator {
     public static JPanel getPanelLayout(Map map, String mapType, int height, int width){
         JPanel panel;

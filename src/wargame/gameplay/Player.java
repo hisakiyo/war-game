@@ -1,10 +1,10 @@
 /**
- * Player est la classe représentant les joueurs.
- * Elle contient son identifiant, la couleur de ses armées, son score et les armées qu'il peut obtenir
- * aléatoirement
- * Elle contient la méthode qui "pioche" une armée aléatoirement et celle qui affiche son score actuel.
- * 
- * @author Tom Maillard
+ * Player est la classe representant les joueurs.
+ * Elle contient son identifiant, la couleur de ses armees, son score et les armees qu'il peut obtenir
+ * aleatoirement
+ * Elle contient la methode qui "pioche" une armee aleatoirement et celle qui affiche son score actuel.
+ *
+ * @author DELFORCE Pierre
  * @version 1.0
  */
 
@@ -35,7 +35,7 @@ public class Player {
     * Constructeur
     * 
     * @param id identifiant du joueur
-    * @param color couleur des armées du joueur
+     * @param color couleur des armees du joueur
     */
 
     public Player(int id, Color color){
@@ -55,13 +55,13 @@ public class Player {
     }
 
 
-    /*****************/ 
-    //Méthodes get
+    /*****************/
+    //Methodes get
 
     /**
-    * Retourne la liste des armées du joueur
-    * 
-    * @return les armées du joueur
+     * Retourne la liste des armees du joueur
+    *
+     * @return les armees du joueur
     */
     public ArrayList<Army> getArmyList() {
         return armyList;
@@ -86,9 +86,9 @@ public class Player {
     }
 
     /**
-    * Retourne la couleur des armées du joueur
-    * 
-    * @return la couleur des amrlées
+     * Retourne la couleur des armees du joueur
+    *
+     * @return la couleur des amrlees
     */
     public Color getPlayerColor() {
         return playerColor;
@@ -96,9 +96,9 @@ public class Player {
 
     /*****************/
 
-    //Méthode set
+    //Methode set
     /**
-    * @param playerColor couleur des armées du joueur
+     * @param playerColor couleur des armees du joueur
     */
 
     public void setPlayerColor(Color playerColor) {
@@ -107,9 +107,9 @@ public class Player {
 
     /*****************/
 
-    // Méthode choississant aléatoirement une armée disponible 
-    // dans les armées du joueur 
-
+    /**
+     * @return Une armee aleatoire
+     */
     public Army getRandomArmy() {
         Random r = new Random();
         int armyId = r.nextInt(this.getArmyList().size());
@@ -120,17 +120,18 @@ public class Player {
 
     /*****************/
 
-    //Méthode qui parcours le terrain pour connaître le score d'un joueur
+    //Methode qui parcours le terrain pour connaître le score d'un joueur
+
     /**
-    * On initialise le score du joueur à 0. Puis on parcours le terrain en
-    * largeur (Main.width) et en hauteur (Main.height) à l'aide de deux boucles.
-    * On vérifie à chaque fois si l'armée appartient à quelqu'un, puis en suite
-    * si elle appartient au joueur concerné. Si oui, on rajoute sa taille au score.
-    * Enfin, on affiche l'identifiant du joueur couplé à son score.
-    *
-    * @param map terrain utilisé sur la partie en cours
-    *
-    */
+    * On initialise le score du joueur a 0. Puis on parcours le terrain en
+     * largeur (Main.width) et en hauteur (Main.height) a l'aide de deux boucles.
+     * On verifie a chaque fois si l'armee appartient a quelqu'un, puis en suite
+     * si elle appartient au joueur concerne. Si oui, on rajoute sa taille au score.
+     * Enfin, on affiche l'identifiant du joueur couple a son score.
+     *
+     * @param map terrain utilise sur la partie en cours
+     *
+     */
 
 
     public void updateScore(Map map) {
@@ -149,8 +150,7 @@ public class Player {
 
     /*****************/
 
-    //Méthode equals pour comparer deux identifiants de deux armées
-
+    //Methode equals pour comparer deux identifiants de deux armees
     public boolean equals(Player p) {
         return this.getPlayerId() == p.getPlayerId();
     }

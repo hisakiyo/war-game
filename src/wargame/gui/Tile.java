@@ -1,10 +1,11 @@
 package wargame.gui;
 
+import wargame.FenetreBoutonsListener;
 import wargame.Main;
 import wargame.gameplay.*;
 import wargame.gui.hex.HexTile;
 import wargame.gui.square.SquareTile;
-import wargame.FenetreBoutonsListener;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
@@ -296,7 +297,7 @@ public abstract class Tile extends JComponent implements MouseListener {
 
     /**
      * sets a new image background for the tile
-     * @param image
+     * @param image L'image servant de background pour la Tile
      */
     public void setTile(BufferedImage image) {
         this.tile = image;
@@ -311,6 +312,11 @@ public abstract class Tile extends JComponent implements MouseListener {
         return this.army;
     }
 
+    /**
+     * Place une armee sur la Map et passe au tour du joueur suivant
+     *
+     * @param army L'armee a placer
+     */
     public void placeArmy(Army army) {
         if (!this.taken) {
             if (this.getType() != RIVER) {
@@ -339,10 +345,10 @@ public abstract class Tile extends JComponent implements MouseListener {
                     Main.currentPlayer = (Player) Main.iterPlayer.next();
                     Main.currentArmy = Main.currentPlayer.getRandomArmy();
                 }
-                for(int i = 0; i<2 ; i++){
-                    Player player = Main.playerQueue.get(i);
-                    player.updateScore(Main.gameMap);
-                    FenetreBoutonsListener.update_score(player.getScore(), i , player.getArmyList().isEmpty());
+
+                for (Player p : Main.playerQueue) {
+                    p.updateScore(Main.gameMap);
+                    FenetreBoutonsListener.update_score(p.getScore(), p.getPlayerId() - 1, p.getArmyList().isEmpty());
                 }
 
             }

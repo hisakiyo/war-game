@@ -1,59 +1,68 @@
-/**
-* TileNeighbors est la classe responsable des voisins de chaque armées posées.
-* Elle vérifie à l'aide d'un itérateur, à chaque fois qu'une armée est posée, s'il faut effectuer
-* des changements. S'il faut augmenter le taille d'une armée alliée ou prendre possession d'une armée ennemi
-* car l'armée posée est plus grande.
-* 
-* @author Tom Maillard
-* @version 1.0
-*/
-
-
 package wargame.gameplay;
 
 import wargame.gui.Tile;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 
+/**
+ * TileNeighbors est la classe responsable des voisins de chaque armees posees.
+ * Elle verifie a l'aide d'un iterateur, a chaque fois qu'une armee est posee, s'il faut effectuer
+ * des changements. S'il faut augmenter le taille d'une armee alliee ou prendre possession d'une armee ennemi
+ * car l'armee posee est plus grande.
+ *
+ * @author Tom Maillard
+ * @version 1.0
+ */
 public abstract class TileNeighbors {
-    //Déclaration array list
+    //Declaration array list
     ArrayList<Tile> neighbors;
 
-    /**********************/
-
-    //Méthode Get
+    //Methode Get
     public ArrayList<Tile> getNeighbors() {
         return neighbors;
     }
 
-    /**********************/
 
-    //Méthode de traitement des armées voisines d'une armée posée
+    //Methode de traitement des armees voisines d'une armee posee
+
     /**
-    * Si l'armée voisine est de plus petite taill eque l'armée posée et qu'elle appartient
-    * au même propriétaire, sa taille augmente de 1.
-    * Si l'armée voisine est de plus petite taill eque l'armée posée et que leurs propriétaires
-    * sont différents, l'armée de plus petite taille est conquise par le propriétaire de l'armée qui
-    * vient d'être posée.
-    *
-    * @param centerTile représente l'armée posée.
-    * currentTile est une armée voisine de centerTile, qui est changée par l'itérateur pour vérifier
-    * tout les voisins.
-    *
-    */
+     * Si l'armee voisine est de plus petite taill eque l'armee posee et qu'elle appartient
+     * au même proprietaire, sa taille augmente de 1.
+     * Si l'armee voisine est de plus petite taill eque l'armee posee et que leurs proprietaires
+     * sont differents, l'armee de plus petite taille est conquise par le proprietaire de l'armee qui
+     * vient d'être posee.
+     *
+     * @param centerTile represente l'armee posee.
+     *                   currentTile est une armee voisine de centerTile, qui est changee par l'iterateur pour verifier
+     *                   tout les voisins.
+     */
     public void updateNeighbors(Tile centerTile) {
-        Tile currentTile = null;
-        Iterator<Tile> iterator = this.getNeighbors().iterator();
-        while(iterator.hasNext()){
-            currentTile = iterator.next();
-            if (centerTile.getArmy().getSize() > currentTile.getArmy().getSize() && centerTile.getArmy().getOwner() == currentTile.getArmy().getOwner()) {
-                currentTile.getArmy().setSize(currentTile.getArmy().getSize() + 1);
-                currentTile.setTextContent("" + currentTile.getArmy().getSize());
+        for (Tile neighbor : this.getNeighbors()) {
+
+            if (centerTile.getArmy().getSize() > neighbor.getArmy().getSize() && centerTile.getArmy().getOwner() == neighbor.getArmy().getOwner()) {
+                neighbor.getArmy().setSize(neighbor.getArmy().getSize() + 1);
+                neighbor.setTextContent("" + neighbor.getArmy().getSize());
+                neighbor.repaint();
             }
-            if(centerTile.getArmy().getSize() > currentTile.getArmy().getSize() && centerTile.getArmy().getOwner() != currentTile.getArmy().getOwner()){
-                currentTile.getArmy().setOwner(centerTile.getArmy().getOwner());
-                currentTile.setTextBackgroundColor(currentTile.getArmy().getOwner().getPlayerColor());
+            //Gestion  du cas des armees ennemies sur une montagne
+            if (centerTile.getType() == Tile.MOUNTAIN) {
+                centerTile.getArmy().setSize(centerTile.getArmy().getSize() + 2);
+            }
+            if (neighbor.getType() == Tile.MOUNTAIN) {
+                neighbor.getArmy().setSize(neighbor.getArmy().getSize() + 2);
+            }
+            if (centerTile.getArmy().getSize() > neighbor.getArmy().getSize() && centerTile.getArmy().getOwner() != neighbor.getArmy().getOwner()) {
+                neighbor.getArmy().setOwner(centerTile.getArmy().getOwner());
+                neighbor.setTextBackgroundColor(neighbor.getArmy().getOwner().getPlayerColor());
+                neighbor.repaint();
+            }
+
+            //On retablie les valeurs normales d'armees
+            if (centerTile.getType() == Tile.MOUNTAIN) {
+                centerTile.getArmy().setSize(centerTile.getArmy().getSize() - 2);
+            }
+            if (neighbor.getType() == Tile.MOUNTAIN) {
+                neighbor.getArmy().setSize(neighbor.getArmy().getSize() - 2);
             }
         }
     }
